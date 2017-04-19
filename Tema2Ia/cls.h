@@ -64,7 +64,6 @@ public:
 		b.push_back(4);
 		b.push_back(5);
 
-
 		std::vector<int> c;
 
 		c.push_back(1);
