@@ -2,10 +2,12 @@
 #include "cls.h"
 
 
+
 int main()
 {
 	cls a;
-	a.citire_date();
+	a.dfs(a.initial_values);
+	a.gbfs(a.initial_values);
 
 	return 0;
 }

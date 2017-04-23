@@ -3,25 +3,29 @@
 #include <vector>
 #include <fstream>
 #include <queue>
+#include <set>
+#include <unordered_set>
+#include <stack>
+#include <ctime>
 
 
-struct comparator
+static struct comparator
 {
-	bool operator()(const std::vector<int> a, const std::vector<int> b)
+	bool operator()(std::vector<int> &a, std::vector<int> &b)
 	{
 		return cmp_vect(a, b);
 	}
 
 
-	bool cmp_vect(std::vector<int> a, std::vector<int> b)
+	bool cmp_vect(std::vector<int> &a, std::vector<int> &b)
 	{
-		std::cout << "da";
+		
 		if (calculare_cardinal_coada(a) > calculare_cardinal_coada(b))
-			return true;
-		return false;
+			return false;
+		return true;
 	}
 
-	int calculare_cardinal_coada(std::vector<int> vect)
+	static int calculare_cardinal_coada(std::vector<int> &vect)
 	{
 		auto ret = 0;
 		for (auto i = vect.begin(); i != vect.end() - 1; ++i)
@@ -30,75 +34,41 @@ struct comparator
 				return ret;
 			ret++;
 		}
-		return ret;
+		return ret ;
 	}
 };
 
 
 class cls
 {
-	std::vector<int> initial_values;
+	
+	std::stack <std::vector<int >> stiva;
 	std::priority_queue<std::vector<int>, std::vector<std::vector<int>>, comparator> coada;
 	std::ifstream f;
+	std::ofstream g;
 	std::vector<int> final_form;
+	std::vector<std::vector<int>>visited;
 
 public:
+	std::vector<int> initial_values;
 	cls()
 	{
-		f.open("inp.txt", std::ifstream::in);
-
-		std::vector<int> a;
-
-		a.push_back(1);
-		a.push_back(2);
-		a.push_back(3);
-		a.push_back(2);
-		a.push_back(3);
-
-
-		std::vector<int> b;
-
-		b.push_back(1);
-		b.push_back(2);
-		b.push_back(3);
-		b.push_back(4);
-		b.push_back(5);
-
-		std::vector<int> c;
-
-		c.push_back(1);
-		c.push_back(2);
-		c.push_back(0);
-		c.push_back(2);
-		c.push_back(3);
-
-
-		coada.push(a);
-		coada.push(b);
-		coada.push(c);
-
-
-		for (int i = 1; i <= 3; i++)
-		{
-			auto x = coada.top();
-			coada.pop();
-			std::cout << std::endl;
-			for (auto y:x)
-			{
-				std::cout << y << " ";
-			}
-		}
-
-
-		int y;
-		std::cin >> y;
+		f.open("inp.txt");
+		g.open("out.txt");
+		srand(time(NULL));
+		this->citire_date();
 	}
 
 	~cls()
 	{
 		f.close();
+		g.close();
 	}
 
 	void citire_date();
-	bool solutie();
+	void interschimbare(std::vector<int>& a);
+	bool solutie(std::vector<int> &vect);
+	void dfs(std::vector<int> vect);
+	void afisare_vect(std::vector<int>& vect);
+	void gbfs(std::vector<int> vect);
 };
